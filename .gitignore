@@ -1,0 +1,11 @@
+.venv
+
+#runtime folders
+downloads
+outputs
+
+# libs
+ffmpeg
+
+#IDE
+.idea
