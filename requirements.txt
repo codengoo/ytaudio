@@ -1,2 +1,6 @@
 yt-dlp
 moviepy
+discord.py
+fastapi
+uvicorn
+python-dotenv
