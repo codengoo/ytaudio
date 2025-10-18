@@ -1,43 +1,24 @@
 import asyncio
-
-import uvicorn
-from fastapi import FastAPI, HTTPException
-from starlette.staticfiles import StaticFiles
-
-from core.config import DISCORD_TOKEN, OUTPUT_DIR, HOST_URL, OUTPUT_URL
-from services.discord_bot import bot
-from services.convert_yt import download_and_extract_audio
-from pydantic import BaseModel
 import os
 
+import uvicorn
+from fastapi import FastAPI
+from starlette.staticfiles import StaticFiles
+
+from api.routes_convert import router as convert_router
+from api.routes_default import router as default_router
+from core.config import DISCORD_TOKEN, OUTPUT_DIR, OUTPUT_URL
+from services.discord_bot import bot
+
 app = FastAPI()
+
+# Static
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 app.mount(f"/{OUTPUT_URL}", StaticFiles(directory=OUTPUT_DIR), name=OUTPUT_URL)
 
-
-class ConvertRequest(BaseModel):
-    url: str
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.post("/")
-async def convert(req: ConvertRequest):
-    try:
-        audio_path = download_and_extract_audio(req.url)
-        file_name = os.path.basename(audio_path)
-        return {"url": req.url, "link": f"{HOST_URL}/{OUTPUT_URL}/{file_name}"}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        print(f"⚠️ Đã xảy ra lỗi: {e}")
-        import traceback
-        traceback.print_exc()
-
-        raise HTTPException(status_code=400, detail=f"Lỗi xử lý: {str(e)}")
+# Routes
+app.include_router(convert_router, prefix="/convert", tags=["convert"])
+app.include_router(default_router, tags=["convert"])
 
 
 async def start_bot():

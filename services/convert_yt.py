@@ -118,3 +118,18 @@ def download_and_extract_audio(youtube_url: str):
 
     print(f"✅ Hoàn tất! Audio được lưu tại: {audio_path}")
     return audio_path
+
+def getInfo(youtube_url:str)->Tuple[str, str]:
+    # Kiểm tra URL hợp lệ
+    if not is_url_valid(youtube_url):
+        raise ValueError("❌ URL không hợp lệ hoặc video không tồn tại.")
+
+    ydl_opts = {
+        "quiet": True,
+        "skip_download": True,
+        "extract_flat": True,
+    }
+
+    with YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(youtube_url, download=False)
+        return info["id"], info["title"]
