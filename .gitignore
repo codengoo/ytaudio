@@ -9,3 +9,4 @@ ffmpeg
 
 #IDE
 .idea
+.env
