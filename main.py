@@ -7,17 +7,19 @@ from starlette.staticfiles import StaticFiles
 
 from api.routes_convert import router as convert_router
 from api.routes_default import router as default_router
+from api.routes_download import router as download_router
 from core.config import DISCORD_TOKEN, OUTPUT_DIR, OUTPUT_URL
 from services.discord_bot import bot
 
 app = FastAPI()
 
 # Static
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-app.mount(f"/{OUTPUT_URL}", StaticFiles(directory=OUTPUT_DIR), name=OUTPUT_URL)
+# os.makedirs(OUTPUT_DIR, exist_ok=True)
+# app.mount(f"/{OUTPUT_URL}", StaticFiles(directory=OUTPUT_DIR), name=OUTPUT_URL)
 
 # Routes
 app.include_router(convert_router, prefix="/convert", tags=["convert"])
+app.include_router(download_router, prefix=f"/{OUTPUT_URL}", tags=["download"])
 app.include_router(default_router, tags=["convert"])
 
 
