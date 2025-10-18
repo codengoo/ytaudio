@@ -9,7 +9,7 @@ from api.routes_convert import router as convert_router
 from api.routes_default import router as default_router
 from api.routes_download import router as download_router
 from core.config import DISCORD_TOKEN, OUTPUT_DIR, OUTPUT_URL
-from services.discord_bot import bot
+from services.discord_bot import bot, load_commands
 
 app = FastAPI()
 
@@ -25,6 +25,7 @@ app.include_router(default_router, tags=["convert"])
 
 async def start_bot():
     print("🚀 Starting bot...")
+    await load_commands()
     await bot.start(DISCORD_TOKEN)
 
 
