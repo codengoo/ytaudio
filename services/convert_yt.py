@@ -117,3 +117,4 @@ def download_and_extract_audio(youtube_url: str):
     audio_path = convert_to_audio(video_path)
 
     print(f"✅ Hoàn tất! Audio được lưu tại: {audio_path}")
+    return audio_path
