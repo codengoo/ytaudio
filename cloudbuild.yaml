@@ -35,4 +35,4 @@ options:
 substitutions:
   _SERVICE_NAME: "ww-yt-audio"
   _REGION: "asia-southeast1"
-  _HOST_URL: "https://my-service-xxxxx.a.run.app"
+  _HOST_URL: "https://ww-yt-audio-267156758563.asia-southeast1.run.app"
