@@ -1,0 +1,11 @@
+services:
+  yt-download:
+    build: .
+    container_name: yt-download
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      FFMPEG_PATH: ${FFMPEG_PATH}
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_GUILD_ID: ${DISCORD_GUILD_ID}

@@ -5,10 +5,9 @@ from typing import Tuple
 from moviepy import VideoFileClip
 from yt_dlp import YoutubeDL
 
-from core.config import OUTPUT_DIR
+from core.config import OUTPUT_DIR, FFMPEG_PATH
 
 # --- Cấu hình ---
-FFMPEG_PATH = r"D:\WORK\pet\ytaudio\ffmpeg\bin\ffmpeg.exe"  # Đường dẫn ffmpeg.exe
 os.environ["IMAGEIO_FFMPEG_EXE"] = FFMPEG_PATH  # MoviePy dùng ffmpeg này
 
 # ==========================
