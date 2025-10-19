@@ -22,7 +22,8 @@ steps:
       - "--port=8000"
       - "--update-env-vars=NODE_ENV=production"
       - "--set-secrets=DISCORD_TOKEN=DISCORD_TOKEN:latest"
-      - "--set-secrets=DISCORD_GUILD_ID=DISCORD_GUILD_ID:latest"
+      - "--set-secrets=DISCORD_GUILD_ID=1389527625764175872"
+      - "-update-env-vars=HOST_URL="
     id: "deploy-service"
 images:
   - "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA"
