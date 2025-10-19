@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA", "."]
+    args: [ "build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA", "." ]
 
   # Push the container image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA"]
+    args: [ "push", "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA" ]
 
   # Deploy to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
@@ -21,9 +21,9 @@ steps:
       - "--allow-unauthenticated"
       - "--port=8000"
       - "--update-env-vars=NODE_ENV=production"
+      - "--update-env-vars=DISCORD_GUILD_ID=1389527625764175872"
+      - '--update-env-vars=HOST_URL=${_HOST_URL}'
       - "--set-secrets=DISCORD_TOKEN=DISCORD_TOKEN:latest"
-      - "--set-secrets=DISCORD_GUILD_ID=1389527625764175872"
-      - "--update-env-vars=HOST_URL=abc"
     id: "deploy-service"
 images:
   - "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA"
@@ -35,3 +35,4 @@ options:
 substitutions:
   _SERVICE_NAME: "ww-yt-audio"
   _REGION: "asia-southeast1"
+  _HOST_URL: "https://my-service-xxxxx.a.run.app"
