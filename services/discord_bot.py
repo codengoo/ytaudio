@@ -20,6 +20,7 @@ async def on_ready():
         print(f" • /{cmd.name}")
 
 async def load_commands():
-    # Nạp tất cả command trong thư mục "commands/"
-    await bot.load_extension("commands.get_audio")  # có thể thêm nhiều lệnh khác ở đây
+    await bot.load_extension("commands.get_audio")
     print("✅ Loaded command: get_audio")
+    await bot.load_extension("commands.qr_bank")
+    print("✅ Loaded command: qr_bank")
