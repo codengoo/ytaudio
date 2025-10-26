@@ -57,6 +57,7 @@ def clean_file_name(file_name: str) -> Tuple[str, str]:
 # 🔹 3. Tải video
 # ==========================
 def download_video(youtube_url: str) -> str:
+    cookie_path = "/secrets/cookies.txt"
     """Tải video từ YouTube và trả về đường dẫn file video."""
     ydl_opts = {
         'format': 'best',
@@ -64,6 +65,13 @@ def download_video(youtube_url: str) -> str:
         'noplaylist': True,
         'ffmpeg_location': FFMPEG_PATH,
     }
+
+    # 🔹 Nếu file cookie tồn tại, thêm vào config
+    if os.path.exists(cookie_path):
+        print(f"✅ Sử dụng cookie từ {cookie_path}")
+        ydl_opts['cookiefile'] = cookie_path
+    else:
+        print("⚠️ Không tìm thấy cookies.txt — có thể bị hạn chế tải một số video YouTube")
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(youtube_url, download=True)

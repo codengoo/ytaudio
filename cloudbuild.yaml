@@ -24,6 +24,7 @@ steps:
       - "--update-env-vars=DISCORD_GUILD_ID=1389527625764175872"
       - '--update-env-vars=HOST_URL=${_HOST_URL}'
       - "--set-secrets=DISCORD_TOKEN=DISCORD_TOKEN:latest"
+      - "--update-secrets=/secrets/cookies.txt=YTB_COOKIE:latest"
     id: "deploy-service"
 images:
   - "${_REGION}-docker.pkg.dev/$PROJECT_ID/gcf-artifacts/${_SERVICE_NAME}:$COMMIT_SHA"
