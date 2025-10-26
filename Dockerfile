@@ -15,6 +15,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
+# Tạo folder secrets để Cloud Run có thể mount file cookies vào
+RUN mkdir -p /secrets
+
 # Expose cổng chạy FastAPI (mặc định 8000)
 EXPOSE 8000
 
