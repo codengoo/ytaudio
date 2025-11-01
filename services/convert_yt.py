@@ -6,6 +6,7 @@ from moviepy import VideoFileClip
 from yt_dlp import YoutubeDL
 
 from core.config import OUTPUT_DIR, FFMPEG_PATH
+from utils.gcs import upload_to_gcs, make_public_url
 
 # --- Cấu hình ---
 os.environ["IMAGEIO_FFMPEG_EXE"] = FFMPEG_PATH  # MoviePy dùng ffmpeg này
@@ -123,7 +124,15 @@ def download_and_extract_audio(youtube_url: str):
     video_path = download_video(youtube_url)
     audio_path = convert_to_audio(video_path)
 
-    print(f"✅ Hoàn tất! Audio được lưu tại: {audio_path}")
+    # 2️⃣ Upload lên GCS
+    base_name = os.path.basename(audio_path)
+    dest_path = f"audios/{base_name}"
+    upload_to_gcs(audio_path, dest_path)
+
+    # 3️⃣ Tạo link tải (chọn 1 trong 2 cách)
+    download_url = make_public_url(dest_path)
+
+    print(f"✅ Hoàn tất! Audio được lưu tại: {download_url}")
     return audio_path
 
 def getInfo(youtube_url:str)->Tuple[str, str]:
