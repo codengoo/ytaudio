@@ -37,7 +37,7 @@ class DownloadButton(discord.ui.View):
 @app_commands.command(name="get_audio", description="Tải audio từ YouTube")
 async def get_audio(interaction: discord.Interaction, url: str):
     await interaction.response.defer()
-
+    println(f"🎵 Tải audio từ URL: {url}")
     try:
         video_id, title = getInfo(url)
         thumbnail_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
